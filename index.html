@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinanceApp v9</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+<div class="layout">
+    <aside class="sidebar" id="sidebar">
+        <div class="logo">💰 FinanceApp <span class="versao-badge">v9</span></div>
+        <div class="menu">
+            <button class="menu-btn ativo" onclick="mostrarSecao('dashboard')">📊 Dashboard</button>
+            <button class="menu-btn" onclick="mostrarSecao('contas')">🏦 Contas</button>
+            <button class="menu-btn" onclick="mostrarSecao('transacoes')">💳 Transações</button>
+            <button class="menu-btn" onclick="mostrarSecao('configuracoes')">⚙️ Configurações</button>
+        </div>
+        <div class="sidebar-footer">
+            <button class="btn-exportar-side" onclick="exportarCSV()">📥 Exportar CSV</button>
+            <button class="btn-exportar-side btn-excel" onclick="exportarExcel()">📊 Exportar Excel</button>
+        </div>
+    </aside>
+    <main class="main">
+        <div class="topbar">
+            <div class="topbar-left">
+                <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+                <h1 id="tituloPagina">Dashboard</h1>
+            </div>
+            <div class="topbar-right">
+                <div class="data-atual" id="dataAtual"></div>
+            </div>
+        </div>
+        <section id="secao-dashboard" class="secao ativa">
+            <div class="cards">
+                <div class="card card-saldo"><div class="card-icon">💰</div><div class="card-content"><h3>Saldo Total</h3><span id="saldo">R$ 0,00</span></div></div>
+                <div class="card card-receita"><div class="card-icon">📈</div><div class="card-content"><h3>Receitas</h3><span id="receitas">R$ 0,00</span></div></div>
+                <div class="card card-despesa"><div class="card-icon">📉</div><div class="card-content"><h3>Despesas</h3><span id="despesas">R$ 0,00</span></div></div>
+                <div class="card card-meta"><div class="card-icon">🎯</div><div class="card-content"><h3>Total Contas</h3><span id="totalContas">0</span></div></div>
+            </div>
+        </section>
+        <section id="secao-contas" class="secao">
+            <div class="contas-header">
+                <div><h2 class="metas-titulo">🏦 Contas Bancárias</h2><p class="metas-subtitulo">Gerencie múltiplas contas</p></div>
+                <button class="btn-nova-conta" onclick="abrirModalNovaConta()">+ Nova Conta</button>
+            </div>
+            <div class="contas-grid" id="contasGrid"></div>
+        </section>
+        <section id="secao-transacoes" class="secao">
+            <div class="card formulario-card"><h2>➕ Nova Transação</h2><div class="formulario"><select id="contaOrigem"><option value="">Selecione conta</option></select><input type="text" id="descricao" placeholder="Descrição"><input type="number" id="valor" placeholder="Valor"><select id="tipo"><option value="receita">Receita</option><option value="despesa">Despesa</option></select><input type="date" id="dataTransacao"><button type="button" onclick="adicionarTransacao()">+ Adicionar</button></div></div>
+            <div class="card tabela-card"><h2>📋 Transações</h2><table id="tabelaTransacoes"><thead><tr><th>Conta</th><th>Descrição</th><th>Tipo</th><th>Data</th><th>Valor</th><th>Ação</th></tr></thead><tbody></tbody></table></div>
+        </section>
+        <section id="secao-configuracoes" class="secao">
+            <div class="card"><h2>⚙️ Configurações</h2><div class="config-grupo"><h3>🎨 Aparência</h3><div class="config-item"><label>Tema</label><div class="tema-btns"><button onclick="mudarTema('escuro')" class="btn-tema ativo" id="tema-escuro">🌙 Escuro</button><button onclick="mudarTema('claro')" class="btn-tema" id="tema-claro">☀️ Claro</button></div></div></div></div>
+        </section>
+    </main>
+</div>
+<div id="modalNovaConta" class="modal-overlay" style="display:none">
+    <div class="modal"><h3>🏦 Nova Conta</h3><div class="nm-field"><label>Nome</label><input type="text" id="ncNome" placeholder="Ex: Banco do Brasil"></div><div class="nm-field"><label>Saldo Inicial</label><input type="number" id="ncSaldo" value="0"></div><div class="modal-btns"><button onclick="fecharModalNovaConta()" class="btn-modal-cancel">Cancelar</button><button onclick="salvarNovaConta()" class="btn-modal-confirm">Criar</button></div></div>
+</div>
+<script src="script-v9.js"></script>
+</body>
+</html>
